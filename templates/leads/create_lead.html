@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block breadcrumb %}
+  <ol class="breadcrumb">
+    <li><a href="{% url 'leads:list' %}">Leads</a></li>
+    <li class="active">Create</li>
+  </ol>
+{% endblock %}
+{%block content%}
+  <form id="add_form" method="POST" action="" novalidate>{%csrf_token%}
+    <div class="assigned_teams row marl">
+      <div class="col-md-12">
+        <!-- <div class="panel panel-default">
+          <div class="panel-heading">
+            Assigned Users & Teams
+          </div>
+          <div class="panel-content">
+            <div class="filter_col col-md-6">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Assigned Users</label>
+                {{ lead_form.assigned_to }}
+                {{ lead_form.assigned_to.errors }}
+              </div>
+            </div>
+            <div class="filter_col col-md-6">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Teams</label>
+                {{ lead_form.teams }}
+                {{ lead_form.teams.errors }}
+              </div>
+            </div>
+            <br clear="all"> -->
+          </div>
+        </div>
+      </div>
+      <br clear="all">
+    </div>
+    <div class="overview_form_block row marl">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Overview
+          </div>
+          <div class="panel-content">
+            <div class="row marl">
+              <div class="col-md-6">
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1" class="name" >Name</label>
+                    <div class="row">
+                      <div class="filter_col col-md-6">
+                        {{ lead_form.first_name }}
+                        {{ lead_form.first_name.errors }}
+                      </div>
+                      <div class="filter_col col-md-6">
+                        {{ lead_form.last_name }}
+                        {{ lead_form.last_name.errors }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1" {% if request.POST.status == "converted" %} class="required" {% endif %}>Account Name</label>
+                    {{ lead_form.account_name }}
+                    {{ lead_form.account_name.errors }}
+                  </div>
+                </div>
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Title</label>
+                    {{ lead_form.title }}
+                    {{ lead_form.title.errors }}
+                  </div>
+                </div>
+                <div class="filter_col col-md-12">
+                  <div class="form-group ">
+                    <label for="exampleInputEmail1">Phone</label>
+                    {{ lead_form.phone }}
+                    {{ lead_form.phone.errors }}
+                  </div>
+                </div>
+                <div class="filter_col col-md-12">
+                  <div class="form-group ">
+                    <label for="exampleInputEmail1" class="required">Email Address</label>
+                    {{ lead_form.email }}
+                    {{ lead_form.email.errors }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1"/>Status</label>
+                    {{ lead_form.status }}
+                    {{ lead_form.status.errors }}
+                  </div>
+                </div>
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1"/>Source</label>
+                    {{ lead_form.source }}
+                    {{ lead_form.source.errors }}
+                  </div>
+                </div>
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1" >Address</label>
+                    {{ address_form.address_line }}
+                    {{ address_form.address_line.errors }}
+                  </div>
+                    {{ address_form.street }}
+                    {{ address_form.street.errors }}
+                  <div class="row" style="margin-top:10px;">
+                    <div class="col-md-4">
+                      {{ address_form.city }}
+                      {{ address_form.city.errors }}
+                    </div>
+                    <div class="col-md-4">
+                      {{ address_form.state }}
+                      {{ address_form.state.errors }}
+                    </div>
+                    <div class="col-md-4">
+                      {{ address_form.postcode }}
+                      {{ address_form.postcode.errors }}
+                    </div>
+                    <div class="col-md-12" style="margin-top:10px;">
+                      {{ address_form.country }}
+                      {{ address_form.country.errors }}
+                    </div>
+                  </div>
+                </div>
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Case Type</label>
+                    {{ lead_form.casetype}}
+                    {{ lead_form.casetype.errors }}
+                  </div>
+                </div>
+              </div>
+              <div class="filter_col col-md-12">
+                <div class="form-group col-md-12">
+                  <label for="exampleInputEmail1" >Description</label>
+                  {{ lead_form.description }}
+                  {{ lead_form.description.errors }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <br clear="all">
+        </div>
+      </div>
+      <input type="hidden" id="save_new_form" name="savenewform">
+    </div>
+    <div class="row marl buttons_row text-center">
+      <button  class="btn btn-default save" type="submit">Save</button>
+      {% if not lead_obj %}
+        <button class="btn btn-success save savenew" type="submit">Save & New</button>
+      {% endif %}
+      <a href="{% url 'leads:list' %}" class="btn btn-default" id="create_lead_cancel">Cancel</a>
+    </div>
+  </form>
+{% endblock %}
+{% block js_block %}
+  <script type="text/javascript">
+    $(".savenew").on('click', function(e){
+      e.preventDefault()
+      $("#save_new_form").val('true')
+      $('#add_form').submit()
+    });
+  </script>
+{% endblock js_block %}

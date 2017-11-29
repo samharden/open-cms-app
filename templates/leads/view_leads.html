@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block breadcrumb %}
+<ol class="breadcrumb">
+  <li><a href="{% url 'leads:list' %}">Leads</a></li>
+  <li class="active">View</li>
+</ol>
+{%endblock%}
+{% block content %}
+<div class="main_container" id="maincontainer">
+  <div class="overview_form_block row marl">
+    <div class="col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-heading view-pad">
+          <h5>
+            CONTACT INFORMATION
+            <span class="pull-right" style="margin-top: -10px">
+              <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Actions
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="{% url 'leads:edit_lead' lead_record.id %}" >Edit</a></li>
+                  <li class="delete_contact" ><a href="{% url 'leads:remove_lead' lead_record.id %}" id="remove_contact">REMOVE</a></li>
+
+                </ul>
+              </div>
+            </span>
+          </h5>
+        </div>
+        <div class="panel-content" id="datashow">
+          <div class="row marl">
+            <div class="col-md-6">
+              <div class="filter_col col-md-12" id="iname">
+                <div class="form-group" >
+
+                  <div class="lead_field" id="lead_name" data-name="name"><h4>{{ lead_record.first_name }} {{ lead_record.last_name }}</h4></div>
+                </div>
+              </div>
+
+
+              <div class="filter_col col-md-12">
+                <div class="form-group">
+                  <label class="lead_field_label" for="id_phone" data-name="name">Phone</label>
+                  <div class="lead_field" id="lead_phone" data-name="name">{{ lead_record.phone }}</div>
+                </div>
+              </div>
+              <div class="filter_col col-md-12">
+                <div class="form-group">
+                  <label class="lead_field_label" for="id_email" data-name="name">Email</label>
+                  <div class="lead_field" id="lead_email" data-name="name"><a href="mailto:{{lead_record.email}}">{{ lead_record.email }}</a></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="filter_col col-md-12">
+                {% if lead_record.status %}
+                <div class="form-group">
+                  <label class="lead_field_label" for="id_status" data-name="name">Status</label>
+                  <div class="lead_field" id="lead_status" data-name="name">{{ lead_record.status }}</div>
+                </div>
+                {% endif %}
+              </div>
+              <div class="filter_col col-md-12">
+                {% if lead_record.source %}
+                <div class="form-group">
+                  <label class="lead_field_label" for="id_source" data-name="name">Source</label>
+                  <div class="lead_field" id="lead_source" data-name="name">{{ lead_record.source }}</div>
+                </div>
+                {% endif %}
+              </div>
+              <div class="filter_col col-md-12">
+                {% if lead_record.website %}
+                <div class="form-group">
+                  <label class="lead_field_label" for="id_website" data-name="name">Website</label>
+                  <div class="lead_field" id="lead_website" data-name="name">{{ lead_record.website }}</div>
+                </div>
+                {% endif %}
+              </div>
+              <div class="filter_col col-md-12">
+                <div class="form-group">
+                  {% if lead_record.address.address_line or lead_record.address.street or lead_record.address.city or lead_record.address.state or lead_record.address.postcode or lead_record.address.country %}
+                  <label class="lead_field_label" for="id_address" data-name="name" >Address</label>
+                  <div class="lead_field" id="lead_address" data-name="name">
+                    {% if lead_record.address.address_line %}
+                      {{lead_record.address.address_line}}</br>
+                    {% endif %}
+                    {% if lead_record.address.street %}
+                      {{ lead_record.address.street }}</br>
+                    {% endif %}
+                    {% if lead_record.address.city %}
+                      {{ lead_record.address.city }}</br>
+                    {% endif %}
+                    {% if lead_record.address.state %}
+                      {{ lead_record.address.state }}</br>
+                    {% endif %}
+                    {% if lead_record.address.postcode %}
+                      {{ lead_record.address.postcode }}</br>
+                    {% endif %}
+                    {% if lead_record.address.country %}
+                    {{ lead_record.address.get_country_display }}
+                    {% endif %}
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- Comments Section starts-->
+        <div class="panel-heading view-pad">
+          <h5>COMMENTS</h5>
+        </div>
+        <div class="panel-content" id="datashow">
+          <div class="row marl">
+            <div class="col-md-12">
+              <form id="comment_form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                <div class="form-group">
+                  <textarea class="form-control" textarea cols="40" rows="3" id="id_comments" name="comment" placeholder="Submit Your Comments Here"></textarea><span><i id="CommentError" style="display:none; color:red"></i></span>
+                  </br>
+                  <button class="btn btn-default save" style="text-align: center;" id="comment_submit" type="submit">Submit</button>
+                </div>
+                <input type="hidden" value="{{lead_record.id}}" name="leadid">
+              </form>
+              <ul class="list-group" id="comments_div">
+                {% for comment in comments %}
+                <li class="list-group-item list-row" id="comment{{comment.id}}">
+                  <div class="pull-right right-container">
+                    <div class="list-row-buttons btn-group pull-right">
+                      <button class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown" type="button"><span class="caret"></span></button>
+                      <ul class="dropdown-menu pull-right">
+                        <li>
+                          <a class="action" onclick="edit_comment({{comment.id}})">Edit</a>
+                        </li>
+                        <li>
+                          <a class="action" onclick="remove_comment({{comment.id}})">Remove</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="stream-head-container">{{ comment.commented_by }} Commented</div>
+                  <div class="stream-post-container" id="comment_name{{comment.id}}"><pre>{{ comment.comment }}</pre></div>
+                  <div class="stream-date-container">{{ comment.commented_on }}</div>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="modal fade" id="Comments_Leads_Modal" role="dialog" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Update Your Comment</h4>
+                </div>
+                <form id="comment_edit_form" method="POST" >{% csrf_token %}
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <textarea class="form-control" textarea cols="40" rows="3" id="id_editcomment" name="comment" placeholder="Submit Your Comments"></textarea>
+                      <input type="hidden" value="{{ lead.id }}" name="leadid">
+                      <input type="hidden" value="" name="commentid" id="commentid">
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-default save" id="comment_edit" type="submit">Update</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Comments Section Ends-->
+      </div>
+    </div>
+    <tr id="meeting{{ meeting.id }}">
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading view-pad">
+          <h5>Case Details</h5>
+        </div>
+        <div class="panel-content" id="datashow">
+          <div class="row marl">
+            <div class="filter_col col-md-12">
+              <div class="form-group">
+                <label class="lead_field_label" for="id_assigned_user" data-name="name" >Case Type</label>
+                <div class="lead_field" id="lead_assigned_users" data-name="name">
+                {{ lead_record.casetype }}
+                </div>
+              </div>
+            </div>
+            <div class="filter_col col-md-12">
+              {% if lead_record.description %}
+              <div class="form-group">
+                <label class="lead_field_label" for="id_description" data-name="name" >Description</label>
+                <div class="lead_field" id="lead_description" data-name="name">{{ lead_record.description }}</div>
+              </div>
+              {% endif %}
+            </div>
+            <div class="filter_col col-md-12">
+              <div class="form-group">
+                <label class="lead_field_label" for="id_created_on" data-name="name">Created On</label>
+                <div class="lead_field" id="lead_created_on" data-name="name">
+                  {{lead_record.created_on}}
+                </div>
+              </div>
+            </div>
+            <div class="filter_col col-md-12">
+              <div class="form-group">
+                <label class="lead_field_label" for="id_created_by" data-name="name">Created by</label>
+                <div class="lead_field" id="lead_created_by" data-name="name">
+                  {{lead_record.created_by}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block js_block %}
+ <script src="{% static 'js/view_lead.js' %}"></script>
+ <script src="{% static 'js/calls.js' %}"></script>
+ <script src="{% static 'js/meetings.js' %}"></script>
+{% endblock js_block %}

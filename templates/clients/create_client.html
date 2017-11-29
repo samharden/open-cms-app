@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block breadcrumb %}
+  <ol class="breadcrumb">
+    <li><a href="{%  url 'clients:list' %}">clients</a></li>
+    <li class="active">Create</li>
+  </ol>
+{% endblock %}
+{% block content %}
+  <form id="formid" action='' method="POST" novalidate>{% csrf_token %}
+    <div class="assigned_teams ro marl">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Assigned Users & Teams
+          </div>
+          <div class="panel-content">
+            <div class="filter_col col-md-6">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Assigned Users</label>
+                {{ account_form.assigned_to }}
+                {{ account_form.assigned_to.errors }}
+              </div>
+            </div>
+            <div class="filter_col col-md-6">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Teams</label>
+                {{ account_form.teams }}
+                {{ account_form.teams.errors }}
+              </div>
+            </div>
+            <br clear="all">
+          </div>
+        </div>
+      </div>
+      <br clear="all">
+    </div>
+    <!-- assigned users & teams ends here -->
+    <!-- overview starts here -->
+    <div class="overview_form_block row marl">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Overview
+          </div>
+          <div class="panel-content">
+            <div class="row marl">
+              <div class="col-md-6">
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1" class="required">Name</label>
+                    {{ account_form.name }}
+                    {{ account_form.name.errors }}
+                  </div>
+                </div>
+
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1" class="required">Phone</label>
+                    {{ account_form.phone }}
+                    {{ account_form.phone.errors }}
+                  </div>
+                </div>
+                <div class="filter_col col-md-12">
+                  <div class="form-group ">
+                    <label for="exampleInputEmail1" class="required">Email Address</label>
+                    {{ account_form.email }}
+                    {{ account_form.email.errors }}
+                  </div>
+                </div>
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Case Type</label>
+                    {{ account_form.industry }}
+                    {{ account_form.industry.errors }}
+                  </div>
+                </div>
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Description</label>
+                    {{ account_form.description }}
+                    {{ account_form.description.errors }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="filter_col billing_block col-md-12">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Billing Address</label>
+                    {{ billing_form.address_line }}
+                    {{ billing_form.address_line.errors }}
+                  </div>
+                    {{ billing_form.street }}
+                    {{ billing_form.street.errors }}
+                  <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-4">
+                      {{ billing_form.city }}
+                      {{ billing_form.city.errors }}
+                    </div>
+                    <div class="col-md-4">
+                      {{ billing_form.state }}
+                      {{ billing_form.state.errors }}
+                    </div>
+                    <div class="col-md-4">
+                      {{ billing_form.postcode }}
+                      {{ billing_form.postcode.errors }}
+                    </div>
+
+                  </div>
+                </div>
+                
+
+              </div>
+            </div>
+            <br clear="all">
+          </div>
+        </div>
+      </div>
+      <br clear="all">
+      <input type="hidden" id="save_new_form" name="savenewform">
+    </div>
+    <!-- overview ends here -->
+    <div class="row marl buttons_row text-center">
+      <button class="btn btn-default save" type="submit">Save</button>
+      {% if not account_obj %}
+        <button class="btn btn-success save savenew" type="submit">Save & New</button>
+      {% endif %}
+      <a href="{% url 'clients:list' %}" class="btn btn-default">CANCEL</a>
+    </div>
+  </form>
+{% endblock %}
+{% block js_block %}
+  <script type="text/javascript">
+    $("#copy_billing_btn").click(function(){
+      var address_line = $("#id_address_line").val()
+      var street = $("#id_street").val()
+      var city = $("#id_city").val()
+      var state = $("#id_state").val()
+      var postcode = $("#id_postcode").val()
+      // var country = $("#id_country").val()
+      $("#id_ship-address_line").val(address_line)
+      $("#id_ship-street").val(street)
+      $("#id_ship-city").val(city)
+      $("#id_ship-state").val(state)
+      $("#id_ship-postcode").val(postcode)
+      // $("#id_ship-country").val(country)
+    });
+
+    $(".savenew").on('click', function(e){
+      e.preventDefault()
+      $("#save_new_form").val('true')
+      $('#formid').submit()
+    });
+  </script>
+{% endblock js_block %}

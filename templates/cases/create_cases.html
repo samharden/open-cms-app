@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block breadcrumb %}
+  <ol class="breadcrumb">
+    <li><a href="#">Cases</a></li>
+    <li class="active">Create</li>
+  </ol>
+{% endblock %}
+{% block content %}
+  <form id="submitForm" method="POST" action="" novalidate>{% csrf_token %}
+
+    <div class="overview_form_block row marl">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Overview
+          </div>
+          <div class="panel-content">
+            <div class="row marl">
+              <div class="col-md-6">
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label for="id_name" class="required">Name</label>
+                    {{ case_form.name }}
+                    <span>{{ case_form.name.errors }}</span>
+                  </div>
+                </div>
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label for="id_status" class="required">Status</label>
+                    {{ case_form.status }}
+                    <span>{{ case_form.status.errors }}</span>
+                  </div>
+                </div>
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label for="id_priority" class="required">Priority</label>
+                    {{ case_form.priority }}
+                    <span>{{ case_form.priority.errors }}</span>
+                  </div>
+                </div>
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label for="id_case_type">Type of Case</label>
+                    {{ case_form.case_type }}
+                    <span>{{ case_form.case_type.errors }}</span>
+                  </div>
+                </div>
+
+                
+              </div>
+              <div class="col-md-6">
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label for="id_account">Client</label>
+                    {{ case_form.account }}
+                    <span> {{case_form.account.errors}}</span>
+                  </div>
+                </div>
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label for="id_contacts">Contacts</label>
+                    {{ case_form.contacts }}
+                  </div>
+                </div>
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label for="id_description">Description</label>
+                    {{ case_form.description }}
+                    <span>{{ case_form.description.errors }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br clear="all">
+          </div>
+        </div>
+      </div>
+      <br clear="all">
+      <input type="hidden" id="save_new_form" name="savenewform">
+    </div>
+    <div class="row marl buttons_row text-center">
+      <button class="btn btn-default save" type="submit">Save</button>
+      {% if not case_obj %}
+        <button class="btn btn-success save savenew" type="submit">Save & New</button>
+      {% endif %}
+      <a href="{% url 'cases:list' %}" class="btn btn-default">Cancel</a>
+    </div>
+  </form>
+{% endblock %}
+{% block js_block %}
+  <script src="{% static 'js/cases/create_case.js' %}"></script>
+  <script type="text/javascript">
+    $(function () {
+     var date = new Date();
+     var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      $('#datepicker1').datetimepicker({
+          'format': 'YYYY-MM-DD',
+          minDate: today
+      }).attr('readonly', 'true')
+    });
+
+    $(".savenew").on('click', function(e){
+      e.preventDefault()
+      $("#save_new_form").val('true')
+      $('#submitForm').submit()
+    });
+  </script>
+{% endblock js_block %}

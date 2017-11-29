@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load paginate %}
+{% block content %}
+<!-- main_container starts here -->
+<div class="main_container">
+  <!-- heading_create starts here -->
+  <div class="row marl heading_create">
+    <div class="heading col-md-12">
+      <div class="col-md-6">
+        <h4>clients</h4>
+      </div>
+      <div class="col-md-6">
+        <div class="create_new text-right">
+          <a href="{% url 'clients:new_account' %}"><i class="fa fa-plus"></i> Add New Client</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- heading_create ends here -->
+  <!-- filter_row starts here -->
+  <div class="filter_row row marl">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading"><center>Client Search</center>
+        </div>
+        <form id="clients_filter" method="POST" action="">{% csrf_token %}
+          <div class="panel-content text-center">
+            <div class="filter_col col-md-4">
+              <div class="form-group">
+                <label for="exampleInputEmail1">NAME</label>
+                <input type="text" class="form-control" placeholder="Client Name" name="name" {% if request.POST %} value="{{request.POST.name}}" {%endif%}/>
+              </div>
+            </div>
+            <!-- <div class="filter_col col-md-4">
+              <div class="form-group">
+                <label for="exampleInputEmail1">CITY</label>
+                <input type="text" class="form-control" placeholder="City" name="city" {% if request.POST %} value="{{request.POST.city}}" {%endif%}/>
+              </div>
+            </div> -->
+            <div class="filter_col col-md-4">
+              <div class="form-group">
+                <label for="exampleInputEmail1">CASE TYPE</label>
+                <select class="form-control" id="id_industry" name="industry" >
+                  <option value="">--Select Type of Case--</option>
+                  {% for each_industry in industries %}
+                  <option value="{{each_industry.0}}" {% if request.POST.industry %} {% ifequal each_industry.0 request.POST.industry %}selected{% endifequal %}{% endif %} >{{each_industry.1}} </option>
+                  {% endfor%}
+                </select>
+              </div>
+            </div>
+            <div class="filter_col text-center">
+              <div class="form-group">
+                <button class="btn btn-primary" type="submit">Search</button>
+                <a href="{% url 'clients:list' %}" class="btn btn-default">Clear</a>
+              </div>
+            </div>
+          </div>
+        </form>
+        <br clear="all">
+      </div>
+    </div>
+  </div>
+  <!-- filter_row ends here -->
+  <!-- clients list start -->
+  <div class="table_container_row row marl">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading-list text-center">
+          CLIENTS
+          <span class="pull-right total_count">{% if show_pageitems %} {% show_pageitems %}{% else %}Total clients {{clients_list|length}}{% endif %}</span>
+        </div>
+        <div class="panel-content">
+          <table class="table table-bordered table-striped table-condensed">
+            <thead>
+              <tr>
+
+                <th width="20%" style="text-align:center;">NAME</th>
+                <th width="20%" style="text-align:center;">CASE TYPE</th>
+                <th width="25%" style="text-align:center;">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if per_page %}
+                {% paginate per_page clients_list %}
+              {% else%}
+                {% paginate 10 clients_list %}
+              {% endif %}
+              {% for each_account in clients_list %}
+              <tr id="account_details{{each_account.id}}" class="text-center">
+
+                <td>{% if each_account.name %}<a href="{% url 'clients:view_account' each_account.id %}">{{ each_account.name }}</a>{% endif %}</td>
+                <td>{% if each_account.industry %}{{ each_account.industry }} {% else %} Not specified {% endif %}</td>
+                <td>
+                  <div class="dropdown">
+                      <button class="btn btn-default dropdown-toggle"  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Options
+                        <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="{% url 'clients:view_account' each_account.id %}">VIEW</a></li>
+                        <li><a href="{% url 'clients:edit_account' each_account.id %}">EDIT</a></li>
+                        <li><a href="{% url 'clients:remove_account' each_account.id %}">REMOVE</a></li>
+                      </ul>
+                    </div>
+
+
+
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% ifequal clients_list|length 0 %}
+            <h4 class="text-center">No Acccount Records Found</h4>
+          {% endifequal %}
+          <div class="text-center row marl">
+            {% show_pages %}
+          </div>
+        </div>
+      </div>
+      <br clear="all">
+    </div>
+  </div>
+  <!-- clients list end -->
+</div>
+<!-- main_container ends here -->
+{% endblock %}
+{% block js_block %}
+<script type="text/javascript">
+  $('.remove_account').click(function(e){
+    e.preventDefault()
+    url = $(this).attr('href')
+    if (!confirm('Are you sure you want to delete?'))
+      return;
+    window.location = $(this).attr('href')
+  });
+
+  $(".reset").click(function(e){
+    window.location = "{% url 'clients:list'%}"
+  });
+
+  $("a[rel='page']").click(function(e){
+    e.preventDefault();
+    $('#clients_filter').attr("action", $(this).attr("href"));
+    $('#clients_filter').submit();
+  });
+</script>
+{% endblock js_block %}

@@ -1,0 +1,893 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block breadcrumb1 %}
+<!-- breadcrumb starts here -->
+<ol class="breadcrumb">
+  <li><a href="{% url 'clients:list' %}">clients</a></li>
+  <li class="active">{{account_record.name}}</li>
+</ol>
+<!-- breadcrumb ends here -->
+{% endblock breadcrumb1 %}
+{% block content %}
+  <!-- clients VIEW STARTS -->
+  <div class="main_container" id="maincontainer">
+    <div class="overview_form_block row marl">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading view-pad">
+            <h5>
+              OVERVIEW
+              <span class="pull-right" style="margin-top: -10px">
+                <div class="dropdown">
+                  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Actions
+                  <span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    <li><a href="{% url 'clients:edit_account' account_record.id %}" >Edit</a></li>
+                    <li class="delete_account" ><a href="{% url 'clients:remove_account' account_record.id %}" id="remove_account">REMOVE</a></li>
+                  </ul>
+                </div>
+              </span>
+            </h5>
+          </div>
+          <div class="panel-content" id="datashow">
+            <div class="row marl">
+              <div class="col-md-6">
+                {% if account_record.name %}
+                <div class="filter_col col-md-12" id="iname">
+                  <div class="form-group" >
+                    <label class="acc_field_label" for="id_name" data-name="name">Name</label>
+                    <div class="account_field" id="account_name" data-name="name">{{ account_record.name }}</div>
+                  </div>
+                </div>
+                {% endif %}
+                {% if account_record.phone %}
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label class="acc_field_label" for="id_phone" data-name="name">Phone</label>
+                    <div class="account_field" id="account_phone" data-name="name">{{ account_record.phone }}</div>
+                  </div>
+                </div>
+                {% endif %}
+                {% if account_record.email %}
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label class="acc_field_label" for="id_email" data-name="name">Email</label>
+                    <div class="account_field" id="account_email" data-name="name"><a href="mailto:{{ account_record.email }}">{{ account_record.email }}</a></div>
+                  </div>
+                </div>
+                {% endif %}
+                {% if account_record.website %}
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label class="acc_field_label" for="id_website" data-name="name">Website</label>
+                    <div class="account_field" id="account_website" data-name="name">{{ account_record.website }}</div>
+                  </div>
+                </div>
+                {% endif %}
+                {% if account_record.industry %}
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label class="acc_field_label" for="id_industry" data-name="name">Case Type</label>
+                    <div class="account_field" id ="account_industry" data-name="name">{{ account_record.industry }}</div>
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+              <div class="col-md-4">
+                {% if account_record.billing_address.address_line or account_record.billing_address.street or  account_record.billing_address.city or   account_record.billing_address.state or account_record.billing_address.postcode or account_record.billing_address.country %}
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label class="acc_field_label" for="id_billing_address" data-name="name">Billing Address</label>
+                    <div class="account_field" id="account_billing_address" data-name="name">
+                      {% if account_record.billing_address.address_line %}
+                        {{account_record.billing_address.address_line}}</br>
+                      {% endif %}
+                      {% if account_record.billing_address.street %}
+                        {{ account_record.billing_address.street }}</br>
+                      {% endif %}
+                      {% if account_record.billing_address.city %}
+                        {{ account_record.billing_address.city }},
+                      {% endif %}
+                      {% if account_record.billing_address.state %}
+                        {{ account_record.billing_address.state }}
+                      {% endif %}
+                      {% if account_record.billing_address.postcode %}
+                        {{ account_record.billing_address.postcode }}</br>
+                      {% endif %}
+                      {% if account_record.billing_address.country %}
+                        {{ account_record.billing_address.get_country_display }}
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+                {% if  account_record.shipping_address.address_line or account_record.shipping_address.street or account_record.shipping_address.city or account_record.shipping_address.state or account_record.shipping_address.postcode or account_record.shipping_address.country %}
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label class="acc_field_label" for="id_shipping_address" data-name="name">Shipping Address</label>
+                    <div class="account_field" id="account_shipping_address" data-name="name">
+                      {% if account_record.shipping_address.address_line %}
+                        Address Line:{{account_record.shipping_address.address_line}}</br>
+                      {% endif %}
+                      {% if account_record.shipping_address.street %}
+                        Street:{{ account_record.shipping_address.street }}</br>
+                      {% endif %}
+                      {% if account_record.shipping_address.city %}
+                        City:{{ account_record.shipping_address.city }}</br>
+                      {% endif %}
+                      {% if account_record.shipping_address.state %}
+                        State:{{ account_record.shipping_address.state }}</br>
+                      {% endif %}
+                      {% if account_record.shipping_address.postcode %}
+                        Postcode:{{ account_record.shipping_address.postcode }}</br>
+                      {% endif %}
+                      {% if account_record.shipping_address.country %}
+                        Country:{{ account_record.shipping_address.get_country_display }}
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+                {% if account_record.description %}
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                    <label class="acc_field_label" for="id_description" data-name="name">Description</label>
+                    <div class="account_field" id="account_description" data-name="name">{{account_record.description}}</div>
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <!-- Comments Section starts-->
+          <div class="panel-heading view-pad">
+            <h5>COMMENTS</h5>
+          </div>
+          <div class="panel-content" id="datashow">
+            <div class="row marl">
+              <div class="col-md-12">
+                <form id="comment_form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                  <div class="form-group">
+                    <textarea class="form-control" textarea cols="40" rows="3" id="id_comments" name="comment" placeholder="Submit Your Comments Here"></textarea><span><i id="CommentError" style="display:none; color:red"></i></span>
+                    </br>
+                    <button class="btn btn-default save" style="text-align: center;" id="comment_submit" type="submit">Submit</button>
+                  </div>
+                  <input type="hidden" value="{{ account_record.id }}" name="accountid">
+                </form>
+                <ul class="list-group" id="comments_div">
+                  {% for comment in comments %}
+                  <li class="list-group-item list-row" id="comment{{comment.id}}">
+                    <div class="pull-right right-container">
+                      <div class="list-row-buttons btn-group pull-right">
+                        <button class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown" type="button"><span class="caret"></span></button>
+                        <ul class="dropdown-menu pull-right">
+                          <li>
+                            <a class="action" onclick="edit_comment({{comment.id}})">Edit</a>
+                          </li>
+                          <li>
+                            <a class="action" onclick="remove_comment({{comment.id}})">Remove</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="stream-head-container">{{ comment.commented_by }} Commented</div>
+                    <div class="stream-post-container" id="comment_name{{comment.id}}"><pre>{{ comment.comment }}</pre></div>
+                    <div class="stream-date-container">{{ comment.commented_on }}</div>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+            <div class="modal fade" id="Comments_clients_Modal" role="dialog" data-keyboard="false" data-backdrop="static">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Update Your Comment</h4>
+                  </div>
+                  <form id="comment_edit_form" method="POST" >{% csrf_token %}
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <textarea class="form-control" textarea cols="40" rows="3" id="id_editcomment" name="comment" placeholder="Submit Your Comments"></textarea><span><i id="CommentEditError" style="display:none; color:red"></i></span>
+                        <input type="hidden" value="{{ account.id }}" name="accountid">
+                        <input type="hidden" value="" name="commentid" id="commentid">
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-default save" id="comment_edit" type="submit">Update</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Comments Section Ends-->
+        </div>
+      </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- clients VIEW ENDS -->
+
+
+
+  <!-- CASES LIST STARTS -->
+  <form method='GET' class="accountdetails_row">
+    <div class="table_container_row row marl">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading-list view-pad text-center">
+            CASES
+            <span class="pull-right glyphicon glyphicon-plus" data-toggle="modal" data-dismiss="modal_case" data-target="#myModal3"></span>
+          </div>
+          <div class="panel-content">
+            <table class="table table-bordered table-striped table-condensed">
+              <thead>
+                <tr>
+
+                  <th width="30%" style="text-align:center;">NAME</th>
+                  <th width="20%" style="text-align:center;">STATUS</th>
+                  <th width="20%" style="text-align:center;">CASE TYPE</th>
+                  <th width="25%" style="text-align:center;">ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for case in cases %}
+                <tr id="cases_details{{case.id}}" class="text-center">
+
+                  <td>{{ case.name }}</td>
+                  <td>{{ case.status }}</td>
+                  <td>
+                    {% if case.case_type %}
+                      {{ case.case_type }}
+                    {% else %}
+                      Not Set
+                    {% endif %}
+                  </td>
+                  <td>
+                    <button type="button" class="caseview btn-info" id="case_view" data-toggle="modal" data-dismiss="modal" data-target="#caseViewModal_{{case.id}}">VIEW</button>
+                    <button type="button" class="caseedit btn-success" id="case_edit" data-toggle="modal" data-dismiss="modal" data-target="#caseEditModal_{{case.id}}">EDIT</button>
+
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <br clear="all">
+      </div>
+    </div>
+  </form>
+  <!-- CASES LISTS ENDS -->
+  <!-- CASES MODAL STARTS -->
+  <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <form id="form_case" method="POST" action="" >
+          {% csrf_token %}
+          <div class="modal-header" style="background:lightblue;">
+            <h4 class="modal-title" id="myLargeModalLabel" style="text-align:center;">Overview</h4>
+          </div>
+          <div class="modal-body">
+            <div class="assigned_teams row marl">
+              <div class="col-md-12">
+                <div class="panel panel-default">
+                  <div class="panel-heading view-pad">
+                    Assigned Users & Teams
+                  </div>
+                  <div class="panel-content">
+                    <div class="filter_col col-md-6">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Assigned Users</label>
+                        <select class="form-control" id="id_assignedto" multiple name="assigned_to">
+                          {%for each_user in users %}
+                          <option value="{{ each_user.id }}">{{ each_user.user }}</option>
+                          {%endfor%}
+                        </select>
+                        {{ case_form.assigned_to.errors }}
+                      </div>
+                    </div>
+                    <div class="filter_col col-md-6">
+                      <div class="form-group">
+                        <label for="id_teams">Teams</label>
+                        <select class="form-control" id="id_teams" multiple name="teams">
+                          {% for team in teams %}
+                          <option value="{{ team.id }}">{{ team.name }}</option>
+                          {% endfor %}
+                        </select>
+                        {{ case_form.teams.errors }}
+                      </div>
+                    </div>
+                    <br clear="all">
+                  </div>
+                </div>
+              </div>
+              <br clear="all">
+            </div>
+            <div class="overview_form_block row marl">
+              <div class="col-md-12">
+                <div class="panel panel-default">
+                  <div class="panel-heading view-pad">
+                    Overview
+                  </div>
+                  <div class="panel-content">
+                    <div class="row marl">
+                      <div class="col-md-6">
+                        <div class="filter_col col-md-12">
+                          <div class="form-group">
+                            <label for="id_name" class="required">Name</label>
+                            <input type="text" id="id_name" maxlength="64" name="name" class="form-control" placeholder="Enter Case Name"/>
+                            {{ case_form.name.errors }}
+                          </div>
+                        </div>
+                        <div class="filter_col col-md-12">
+                          <div class="form-group">
+                            <label for="id_status" class="required">Status</label>
+                            <select class="form-control" id="id_status" name="status" >
+                              <option value="">--Select Status--</option>
+                              {% for status in case_status %}
+                                <option value="{{ status.0 }}">{{ status.1 }}</option>
+                              {% endfor %}
+                            </select>
+                            {{ case_form.status.errors }}
+                          </div>
+                        </div>
+                        <div class="filter_col col-md-12">
+                          <div class="form-group">
+                            <label for="id_priority" class="required">Priority</label>
+                            <select class="form-control" id="id_priority" name="priority">
+                              <option value="">--Select Priority--</option>
+                              {% for priority in case_priority %}
+                                <option value="{{ priority.0 }}">{{ priority.1 }}</option>
+                              {% endfor %}
+                            </select>
+                            {{ case_form.probability.errors }}
+                          </div>
+                        </div>
+                        <div class="filter_col col-md-12">
+                          <div class="form-group">
+                            <label for="id_case_type">Type</label>
+                            <select class="form-control" id="id_case_type" name="case_type">
+                              <option value="">--Select Case Type--</option>
+                              {% for case_type in case_types %}
+                                <option value="{{ case_type.0 }}">{{ case_type.1 }}</option>
+                              {% endfor %}
+                            </select>
+                            {{ case_form.case_type.errors }}
+                          </div>
+                        </div>
+                        <!-- <div class="filter_col col-md-12">
+                          <div class="form-group">
+                            <label for="exampleInputEmail1" class="required">Close Date</label>
+                            <div class='input-group date' id='datetimepicker1'>
+                              <input type='text' class="form-control" id="id_closed_on" name="closed_on" value="{{request.POST.closed_on}}"/>
+                              <span class="input-group-addon">
+                              <span class="glyphicon glyphicon-calendar"></span>
+                              </span>
+                            </div>
+                            {{ case_form.closed_on.errors }}
+                          </div>
+                        </div> -->
+                      </div>
+                      <div class="col-md-6">
+                        <div class="filter_col col-md-12">
+                          <div class="form-group">
+                            <label for="id_account">Client</label>
+                            <select class="form-control" id="id_account" name="account" >
+                              <option value="{{ account_record.id }}" selected >{{ account_record.name }}</option>
+                            </select>
+                            {{ case_form.account.errors }}
+                          </div>
+                        </div>
+                        <div class="filter_col col-md-12">
+                          <div class="form-group">
+                            <label for="id_contacts">Contacts</label>
+                            <select class="form-control" multiple="multiple" id="id_contacts" name="contacts">
+                            {% for contact in contacts %}
+                            <option value="{{ contact.id }}">{{ contact.first_name }} {{ contact.last_name }}</option>
+                            {% endfor %}
+                            </select>
+                            {{ case_form.contacts.errors }}
+                          </div>
+                        </div>
+                        <div class="filter_col col-md-12">
+                          <div class="form-group">
+                            <label for="id_description">Description</label>
+                            <textarea class="form-control" textarea cols="40" id="id_description" name="description" rows="4" placeholder="Enter Description"></textarea>
+                            {{ case_form.description.errors }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <br clear="all">
+                  </div>
+                </div>
+              </div>
+              <br clear="all">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="row marl buttons_row text-center">
+              <button class="btn btn-default save" type="submit">Save</button>
+              <button type="button" class="btn btn-default" onclick="caseForm()" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- CASES MODAL ENDS -->
+  <!-- CASES VIEW MODAL STARTS -->
+  {% for case in cases %}
+  <div class="modal fade" id="caseViewModal_{{case.id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background:lightblue;">
+          <h5 class="modal-title" id="myLargeModalLabel" style="text-align:center;">CASES
+          </h5>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-7">
+            <div class="panel panel-default">
+              <div class="panel-heading view_pad">
+                OverView
+              </div>
+              <br clear="all">
+              <div class="panel-content" id="datashow">
+                <div class="row marl">
+                  <div class="col-md-6">
+                    <div class="col-md-12" id="iname">
+                      <div class="form-group" >
+                        <label class="acc_field_label" for="id_name" data-name="name" >Name</label>
+                        <div class="account_field" id="account_case_name" data-name="name">{{case.name}}</div>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="acc_field_label" for="id_status" data-name="name" >Status</label>
+                        <div class="account_field" id="account_case_status" data-name="name">{{ case.status }}</div>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="acc_field_label" for="id_priority" data-name="name" >Priority</label>
+                        <div class="account_field" id="account_case_priority" data-name="name">{{ case.priority }}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="acc_field_label" for="id_name" data-name="name" >Client</label>
+                        <div class="account_field" id="account_case_account" data-name="name">
+                          {{account_record.name}}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      {% if case.contacts.all %}
+                      <div class="form-group">
+                        <label class="acc_field_label" for="id_name" data-name="name" >Contact(s)</label>
+                        <div class="account_field" id="account_case_contacts" data-name="name">
+                          {% for contact in case.contacts.all %}
+                            <li>{{contact.first_name}} {{ contact.last_name }}</li>
+                          {% endfor %}
+                        </div>
+                      </div>
+                      {% endif %}
+                    </div>
+                    <div class="col-md-12">
+                      {% if case.case_type %}
+                      <div class="form-group">
+                        {% if case.case_type %}
+                        <label class="acc_field_label" for="id_casetype" data-name="name" >Type</label>
+                        <div class="account_field" id="account_case_type" data-name="name">{{case.case_type }}</div>
+                        {% endif %}
+                      </div>
+                      {% endif %}
+                    </div>
+                    <div class="col-md-12">
+                      {% if case.description %}
+                      <div class="form-group">
+                        {% if case.description %}
+                        <label class="acc_field_label" for="id_description" data-name="name">Description</label>
+                        <div class="account_field" id="account_case_description" data-name="name">{{ case.description }}</div>
+                        {% endif %}
+                      </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="panel panel-default">
+              <div class="panel-heading view_pad">
+                Labels
+              </div>
+              <br clear="all">
+              <div class="panel-content" id="datashow">
+                <div class="row marl">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="acc_field_label" for="assigned_user" data-name="assigned_user" >Assigned User</label>
+                      <div class="account_field" id="assigned_user" data-name="name">
+                        {%if not case.assigned_to.all %}
+                          Not Assigned Yet
+                        {% else %}
+                          {% for user in case.assigned_to.all %}
+                            <li>{{user}}</li>
+                          {% endfor %}
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="acc_field_label" for="id_name" data-name="name" >Assigned Team</label>
+                      <div class="account_field" id="account_team" data-name="name">
+                        {%if not case.teams.all %}
+                          Not Assigned Yet
+                        {% else %}
+                          {% for team in case.teams.all %}
+                            <li>{{team}}</li>
+                          {% endfor %}
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="acc_field_label" for="id_name" data-name="name" >Created On</label>
+                      <div class="account_field" id="account_date" data-name="name">
+                        {{case.created_on|date}}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="acc_field_label" for="id_name" data-name="name" >Created By</label>
+                      <div class="account_field" id="account_date" data-name="name">
+                        {{case.created_by}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br clear="all">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  <!-- CASES VIEW MODAL ENDS -->
+  <!-- CASES EDIT MODAL STARTS -->
+  {% for case in cases %}
+  <div class="modal fade" id="caseEditModal_{{case.id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <form class= "form_case_edit" id="form_case_edit" method="POST" action="{% url 'cases:edit_case' case.id %}">
+          {% csrf_token %}
+          <div class="modal-header" style="background:lightblue;">
+            <h4 class="modal-title" id="myLargeModalLabel" style="text-align:center;">CASES</h4>
+          </div>
+          <div class="modal-body">
+            <div class="assigned_teams row marl">
+              <div class="col-md-12">
+                <div class="panel panel-default">
+                  <div class="panel-heading view-pad">
+                    Assigned Users & Teams
+                  </div>
+                  <div class="panel-content">
+                    <div class="filter_col col-md-6">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Assigned Users</label>
+                        <select class="form-control" id="id_assignedto" multiple name="assigned_to">
+                          {% for each_user in users %}
+                          <option value="{{ each_user.id }}" {% if each_user in case.assigned_to.all %} selected {% endif %}>{{ each_user.user}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                    <div class="filter_col col-md-6">
+                      <div class="form-group">
+                        <label for="id_teams">Teams</label>
+                        <select class="form-control" id="id_teams" multiple name="teams">
+                          {% for team in teams %}
+                          <option value="{{ team.id }}" {%if team in case.teams.all %} selected {% endif %} >{{ team.name }}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                    <br clear="all">
+                  </div>
+                </div>
+              </div>
+              <br clear="all">
+            </div>
+            <div class="overview_form_block row marl">
+              <div class="col-md-12">
+                <div class="panel panel-default">
+                  <div class="panel-heading view-pad">
+                    Overview
+                  </div>
+                  <div class="panel-content">
+                    <div class="row marl">
+                      <div class="col-md-6">
+                        <div class="filter_col col-md-12">
+                          <div class="form-group">
+                            {% if error.name %}
+                            {{error.name}}
+                            {% endif %}
+                            <label for="id_name" class="required">Name</label>
+                            <input type="text" id="id_name" maxlength="64" name="name" class="form-control" placeholder="Enter Case Name" value="{{ case.name }}"/>
+                          </div>
+                        </div>
+                        <div class="filter_col col-md-12">
+                          <div class="form-group ">
+                            <label for="id_status">Status</label>
+                            <select class="form-control" id="id_status" name="status" >
+                              <option value="">--Select Status--</option>
+                              {% for status in case_status %}
+                                <option value="{{ status.0 }}" {% if status.0 == case.status %} selected {% endif %}>{{ status.1 }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+                        </div>
+                        <div class="filter_col col-md-12">
+                          <div class="form-group">
+                            <label for="id_priority">Priority</label>
+                            <select class="form-control" id="id_priority" name="priority">
+                              <option value="">--Select Priority--</option>
+                              {% for priority in case_priority %}
+                                <option value="{{ priority.0 }}" {% if priority.0 == case.priority %} selected{% endif %}>{{ priority.1 }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+                        </div>
+                        <div class="filter_col col-md-12">
+                          <div class="form-group">
+                            <label for="id_case_type">Type</label>
+                            <select class="form-control" id="id_case_type" name="case_type">
+                              <option value="">--Select CaseType--</option>
+                              {% for case_type in case_types %}
+                                <option value="{{ case_type.0 }}" {% if case_type.0 == case.case_type %} selected {% endif %}>{{ case_type.1 }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+                        </div>
+                        <div class="filter_col col-md-12">
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">Close Date</label>
+                            <div class='input-group date' id='datetimepicker2'>
+                              <input type='text' class="form-control" id="id_closedon" name="closed_on" value="{{case.closed_on|date:"Y-m-d"}}"/>
+                              <span class="input-group-addon">
+                              <span class="glyphicon glyphicon-calendar"></span>
+                              </span>
+                            </div>
+                            {{ case_form.closed_on.errors }}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="filter_col col-md-12">
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">Client</label>
+                            <select class="form-control" id="id_account" name="account">
+                              <option value="{{ account_record.id }}" selected >{{ account_record.name }}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="filter_col col-md-12">
+                          <div class="form-group">
+                            <label for="id_contacts">Contacts</label>
+                            <select class="form-control" id="id_contacts" multiple name="contacts" >
+                            {% for contact in contacts %}
+                            <option value="{{contact.id}}" {% for case_contact in case.contacts.all %} {%ifequal contact.id case_contact.id %} selected {% endifequal %} {% endfor %}>{{ contact.first_name }}{{ contact.last_name }}</option>
+                            {% endfor %}
+                            </select>
+                            {{ case_form.contacts.errors }}
+                          </div>
+                        </div>
+                        <div class="filter_col col-md-12">
+                          <div class="form-group">
+                            <label for="exampleInputEmail1" >Description</label>
+                            <textarea class="form-control" rows="3"  id="id_description" name="description"> {% if case.description %}{{ case.description}} {% else %}{{request.POST.description }} {%endif%} </textarea>
+                            {{ case_form.description.errors }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <br clear="all">
+                  </div>
+                </div>
+              </div>
+              <br clear="all">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="row marl buttons_row text-center">
+              <button class=" btn btn-default save" type="submit">Save</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  <!-- CASES EDIT MODAL ENDS -->
+{% endblock content %}
+{% block js_block %}
+  <script src="{% static 'js/clients/view_account.js' %}"></script>
+  <script type="text/javascript">
+    $("#form_opp").submit(function(e) {
+      e.preventDefault();
+      $this = $(this)
+
+      $.post(url, $this.serialize(), function(response){
+        if(response.error){
+          $(".error").remove();
+          $.each(response.opportunity_errors,
+            function(field_name, error){
+              opp_error = '<span class="error" style="color:red;">' + error + '</span>'
+              $this.find("[name=" + field_name + "]").after(opp_error); })
+            }
+        else {
+          window.location = "";
+        }
+      })
+    });
+
+    $(".form_opp_edit").submit(function(e) {
+      e.preventDefault();
+      $this = $(this)
+      url = $this.attr('action')
+      $.post(url , $this.serialize(), function(response){
+        if(response.error){
+          $(".error").remove();
+          $.each(response.opportunity_errors,
+            function(field_name, error){
+              opp_error = '<span class="error" style="color:red;">' + error + '</span>'
+              $this.find("[name=" + field_name + "]").after(opp_error); })
+            }
+        else {
+          window.location = "";
+        }
+      })
+    });
+
+    $("body").on("click",".opp_remove",function(e){
+      href=$(this).attr("data-href")
+      id=$(this).attr("id")
+      $.get(href,{}, function(data){
+        window.location = "";
+      },'json');
+    });
+
+    $("#form_con").submit(function(e) {
+      e.preventDefault();
+      $this = $(this)
+      url = "{% url 'contacts:add_contact' %}"
+      $.post(url, $this.serialize(), function(response){
+          if(response.error){
+            $(".error").remove();
+            $.each(response.contact_errors,
+              function(field_name, error){
+                contact_error = '<span class="error" style="color:red;">' + error + '</span>'
+                $this.find("[name=" + field_name + "]").after(contact_error); })
+              }
+          else {
+            window.location = "";
+          }
+      })
+    });
+
+    $(".form_con_edit").submit(function(e) {
+      e.preventDefault();
+      $this = $(this)
+      url = $this.attr('action')
+      $.post(url , $this.serialize(), function(response){
+          if(response.error){
+            $(".error").remove();
+            $.each(response.contact_errors,
+              function(field_name, error){
+                contact_error = '<span class="error" style="color:red;">' + error + '</span>'
+                $this.find("[name=" + field_name + "]").after(contact_error); })
+              }
+          else {
+            window.location = "";
+          }
+      })
+    });
+
+    $("body").on("click",".con_remove",function(e){
+      href=$(this).attr("data-href")
+      id=$(this).attr("id")
+      $.get(href,{}, function(data){
+        window.location = "";
+      },'json');
+    });
+
+    $("#form_case").submit(function(e) {
+      e.preventDefault();
+      $this = $(this)
+
+      $.post(url, $this.serialize(), function(response){
+        if(response.error){
+          $(".error").remove();
+          $.each(response.case_errors,
+            function(field_name, error){
+              case_error = '<span class="error" style="color:red;"> *' + error + '</span>'
+              $this.find("[name=" + field_name + "]").after(case_error); })
+            }
+        else {
+          window.location = "";
+        }
+      })
+    });
+
+    $(".form_case_edit").submit(function(e) {
+      e.preventDefault();
+      $this = $(this)
+      url = $this.attr('action')
+      $.post(url , $this.serialize(), function(response){
+          if(response.error){
+            $(".error").remove();
+            $.each(response.case_errors,
+              function(field_name, error){
+                case_error = '<span class="error" style="color:red;">' + error + '</span>'
+                $this.find("[name=" + field_name + "]").after(case_error); })
+              }
+          else {
+            window.location = "";
+          }
+      })
+    });
+
+    $("body").on("click",".case_remove",function(e){
+      href=$(this).attr("data-href")
+      id=$(this).attr("id")
+        window.location = "";
+      $.get(href,{}, function(data){
+      },'json');
+    });
+
+    $(function () {
+      $('#datetimepicker1, #datetimepicker2').datetimepicker({
+        'format': 'YYYY-MM-DD'
+      });
+    });
+
+    $('#remove_account').click(function(e){
+      var result = confirm("Are You Sure You Want to delete?");
+      if (result==false) {
+        e.preventDefault()
+      }
+    });
+
+    function oppForm() {
+      $('.error').hide()
+      document.getElementById("form_opp").reset();
+    }
+
+    function conForm() {
+      $('.error').hide()
+      document.getElementById("form_con").reset();
+    }
+
+    function caseForm() {
+      $('.error').hide()
+      document.getElementById("form_case").reset();
+    }
+  </script>
+{% endblock js_block %}

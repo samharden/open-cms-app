@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<br>
+
+      <div class="main_container" id="maincontainer">
+        <div class="overview_form_block row marl">
+
+
+<div class="col-md-8" style="margin-right:5%; margin-left:5%">
+  <div class="panel panel-default" >
+    <div class="panel-heading view-pad" style="background-color:#39464D">
+      <h5 style="color:white"><center>
+        UPLOAD FILE
+      </center>
+    </div>
+
+        <div class="panel-content" id="datashow" style="margin-right:5%; margin-left:5%">
+
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h5>Name of case: &nbsp {{ form.name}}</h5>
+            <h5>Document description: &nbsp {{ form.description}}</h5>
+            <h5>{{ form.document}}</h5>
+            <center>
+            <button type="submit" class="btn btn-default">Upload</button>
+          </center>
+          </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+{% endblock %}
+{% block js_block %}
+  <script src="{% static 'js/cases/view_case.js' %}"></script>
+  <script src="{% static 'js/cases/create_case.js' %}"></script>
+{% endblock js_block %}
