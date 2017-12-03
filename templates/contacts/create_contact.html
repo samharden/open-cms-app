@@ -7,40 +7,37 @@
   </ol>
 {% endblock %}
 {% block content %}
-  <form id="add_form" method="POST" action='' novalidate>{%csrf_token%}
-    <div class="assigned_teams row marl">
+<div class="container">
+
+  <center>
+    <h3>Create Client</h3>
+  </center>
+  <form id="formid" action='' method="POST" novalidate>{% csrf_token %}
+
+    <div class="overview_form_block row marl">
       <div class="col-md-12">
         <div class="panel panel-default">
-          <div class="panel-heading">
-            Assigned Users & Teams
-          </div>
+
           <div class="panel-content">
-            <div class="filter_col col-md-6">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Assigned Users</label>
+            <div class="row marl">
+              <!-- <div class="col-md-6"> -->
+                <div class="filter_col col-md-12">
+                  <div class="form-group">
+                <label for="exampleInputEmail1">Associated Users</label>
                 {{ contact_form.assigned_to }}
                 {{ contact_form.assigned_to.errors }}
               </div>
             </div>
-            <div class="filter_col col-md-6">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Teams</label>
-                {{ contact_form.teams }}
-                {{ contact_form.teams.errors }}
-              </div>
-            </div>
+
             <br clear="all">
           </div>
         </div>
-      </div>
+      <!-- </div> -->
       <br clear="all">
-    </div>
+    <!-- </div> -->
     <div class="overview_form_block row marl">
       <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            Overview
-          </div>
+
           <div class="panel-content">
             <div class="row marl">
               <div class="col-md-6">
@@ -61,7 +58,7 @@
                 </div>
                 <div class="filter_col col-md-12">
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Account</label>
+                    <label for="exampleInputEmail1">Associated Client</label>
                     {{ contact_form.account }}
                     {{ contact_form.account.errors }}
                   </div>
@@ -103,7 +100,7 @@
                       {{ address_form.postcode }}
                       {{ address_form.postcode.errors }}
                     </div>
-                    
+
                   </div>
                 </div>
                 <br clear="all">

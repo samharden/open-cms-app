@@ -3,80 +3,59 @@
 {% load paginate %}
 {% block content %}
 <!-- main_container starts here -->
-<div class="main_container">
-  <!-- heading_create starts here -->
-  <div class="row marl heading_create">
-    <div class="heading col-md-12">
-      <div class="col-md-6">
-        <h4>Contacts</h4>
-      </div>
-      <div class="col-md-6"><div class="create_new text-right"><a href="{% url 'contacts:add_contact'%}">
 
-          <i class="fa fa-plus"></i> Add New Contact</a>
-
-      </div>
+<div class="container">
+  <div class="col-md-8 col-sm-6 col-xs-12" style="width:95%">
+  <!-- <div class="col-md-2"> -->
+    <div class="create_new text-right">
+      <a href="{% url 'contacts:add_contact'%}"><i class="fa fa-plus"></i></a>
     </div>
   </div>
-  <!-- heading_create ends here -->
-  <!-- filter_row starts here -->
+  <center>
+    <h3>Contacts</h3>
+  </center>
+
   <div class="filter_row row marl">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-        </div>
+
         <form id="contacts_filter" action="" method="POST">{%csrf_token%}
           <div class="panel-content text-center">
-            <div class="filter_col col-md-4">
+            <div class="filter_col col-md-12">
               <div class="form-group">
-                <label for="exampleInputEmail1">clients</label>
+                <center>
+                  <h4>Search</h4>
+                </center>
                 <select class="form-control" id="id_account" name="account">
-                  <option value="" selected="selected">--Select an Account--</option>
+                  <option value="" selected="selected">--Select by Client--</option>
                   {% for account in clients %}
                   <option value="{{account.id}}" {%ifequal account.id request.POST.account|add:"0"%} selected {%endifequal%}>{{ account.name }}</option>
                   {% endfor %}
                 </select>
-              </div>
-            </div>
-            <div class="filter_col col-md-4">
-              <div class="form-group">
-                <label for="exampleInputEmail1">NAME</label>
                 <input type="text" class="form-control" placeholder="First Name" name="first_name" value="{{request.POST.first_name}}">
-              </div>
-            </div>
-            <div class="filter_col col-md-4">
-              <div class="form-group">
-                <label for="exampleInputEmail1">CITY</label>
                 <input type="text" class="form-control" placeholder="City" name="city" value="{{request.POST.city}}">
               </div>
             </div>
             <div class="filter_col text-center">
               <div class="form-group">
-                <button  class="btn btn-primary" type="submit">Search</button>
-                <a href="{% url 'contacts:list' %}" class="btn btn-default">Clear</a>
+                <button class="btn btn-round btn-dropdown-toggle" type="submit">Search</button>
+                <a href="{% url 'contacts:list' %}" class="btn btn-round btn-dropdown-toggle">Clear</a>
               </div>
             </div>
-          </div>
+
         </form>
         <br clear="all">
-      </div>
-    </div>
-  </div>
-  <!-- filter_row ends here -->
-  <!-- contacts list start -->
-  <div class="table_container_row row marl">
+
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading-list text-center">
           LIST OF CONTACTS
-          <span class="pull-right total_count">{% if show_pageitems %} {% show_pageitems %}{% else %}Total Contacts {{contact_obj_list|length}}{% endif %}</span>
-        </div>
+          </div>
         <div class="panel-content">
           <table class="table table-bordered table-striped table-condensed">
             <thead>
               <tr>
-                <th width="5%" style="text-align:center;">S.No</th>
                 <th width="20%" style="text-align:center;">NAME</th>
-                <th width="20%" style="text-align:center;">ACCOUNT</th>
+                <th width="20%" style="text-align:center;">CLIENT</th>
                 <th width="15%" style="text-align:center;">CITY</th>
                 <th width="15%" style="text-align:center;">STATE</th>
                 <th width="25%" style="text-align:center;">ACTIONS</th>
@@ -90,7 +69,7 @@
               {% endif %}
               {% for contact in contact_obj_list %}
               <tr style="text-align:center;">
-                <td scope="row">{{ forloop.counter }}</td>
+
                 <td><a href="{% url 'contacts:view_contact' contact.id %}">{{contact.first_name}}</a></td>
                 <td>
                   {% if contact.account %}
@@ -115,10 +94,8 @@
                 </td>
                 <td>
                   <div class="dropdown">
-                      <button class="btn btn-default dropdown-toggle"  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Options
-                        <span class="caret"></span>
-                      </button>
+                    <p id="dropdownMenu1" data-toggle="dropdown">Options
+                    <span class="caret" ></span></p>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li><a href="{% url 'contacts:view_contact' contact.id %}">View</a></li>
                         <li><a href="{% url 'contacts:edit_contact' contact.id%}">Edit</a></li>

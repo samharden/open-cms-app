@@ -13,12 +13,14 @@ from common.utils import PRIORITY_CHOICE, STATUS_CHOICE, INDCHOICES
 # CRUD Operations Start
 
 
-@login_required
+# @login_required
 def cases_list(request):
     cases = Case.objects.all().select_related("account")
     clients = Account.objects.all()
     page = request.POST.get('per_page')
     name = request.POST.get('name')
+    ctype = request.POST.get('ctype')
+    desc = request.POST.get('desc')
     status = request.POST.get('status')
     priority = request.POST.get('priority')
     account = request.POST.get('account')
@@ -26,12 +28,11 @@ def cases_list(request):
         account = 0
     if name:
         cases = Case.objects.filter(name__contains=name)
-    if account:
-        cases = cases.filter(account=account)
-    if status:
-        cases = cases.filter(status=status)
-    if priority:
-        cases = cases.filter(priority=priority)
+    if ctype:
+        cases = Case.objects.filter(case_type__contains=ctype)
+    if desc:
+        cases = Case.objects.filter(description__contains=desc)
+
     return render(request, "cases/cases.html", {
         'cases': cases,
         'clients': clients,
@@ -42,7 +43,7 @@ def cases_list(request):
     })
 
 
-@login_required
+# @login_required
 def add_case(request):
     clients = Account.objects.all()
     contacts = Contact.objects.all()
@@ -96,7 +97,7 @@ def add_case(request):
     })
 
 
-@login_required
+# @login_required
 def view_case(request, case_id):
     case_record = get_object_or_404(
         Case.objects.prefetch_related("contacts", "account"), id=case_id)
@@ -280,7 +281,7 @@ def remove_comment(request):
 # Other Views
 
 
-@login_required
+# @login_required
 def get_cases(request):
     if request.method == 'GET':
         cases = Case.objects.all()

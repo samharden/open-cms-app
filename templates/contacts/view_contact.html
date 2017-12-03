@@ -8,16 +8,14 @@
 {%endblock%}
 {%block content%}
 <!-- CONTACTS VIEW STARTS -->
-  <div class="main_container" id="maincontainer">
-    <div class="overview_form_block row marl">
-      <div class="col-md-8">
-        <div class="panel panel-default">
-          <div class="panel-heading view-pad">
+<div class="container">
+  <div class="col-md-8 col-sm-6 col-xs-12" style="width:95%">
+
             <h5>
               OVERVIEW
               <span class="pull-right" style="margin-top: -10px">
                 <div class="dropdown">
-                  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Actions
+                  <button class="btn btn-round btn-dropdown-toggle" type="button" data-toggle="dropdown">Actions
                   <span class="caret"></span></button>
                   <ul class="dropdown-menu">
                     <li><a href="{% url 'contacts:edit_contact' contact_record.id %}">Edit</a></li>
@@ -59,7 +57,7 @@
                 <div class="filter_col col-md-12">
                   <div class="form-group">
                     {% if contact_record.address.address_line or contact_record.address.street or contact_record.address.city or  contact_record.address.state or contact_record.address.postcode or contact_record.address.country %}
-                    <label class="contact_field_label" for="id_address" data-name="name" >Billing Address</label>
+                    <label class="contact_field_label" for="id_address" data-name="name" >Address</label>
                     <div class="contact_field" id="contact_address" data-name="name">
                       {% if contact_record.address.address_line %}
                         Address Line:{{contact_record.address.address_line}}</br>
@@ -96,7 +94,7 @@
           </div>
           <!-- Comments Section starts-->
           <div class="panel-heading view-pad">
-            <h5>COMMENTS</h5>
+            <h5>Contact Notes</h5>
           </div>
           <div class="panel-content" id="datashow">
             <div class="row marl">
@@ -104,8 +102,8 @@
                 <form id="comment_form" method="POST" enctype="multipart/form-data">{% csrf_token %}
                   <div class="form-group">
                     <textarea class="form-control" textarea cols="40" rows="3" id="id_comments" name="comment" placeholder="Submit Your Comments Here"></textarea><span><i id="CommentError" style="display:none; color:red"></i></span>
-                    </br>
-                    <button class="btn btn-default save" style="text-align: center;" id="comment_submit" type="submit">Submit</button>
+                  </br><center>
+                    <button class="btn btn-round btn-dropdown-toggle" style="text-align: center;" id="comment_submit" type="submit">Submit</button></center>
                   </div>
                   <input type="hidden" value="{{contact_record.id}}" name="contactid">
                 </form>
@@ -114,7 +112,7 @@
                   <li class="list-group-item list-row" id="comment{{comment.id}}">
                     <div class="pull-right right-container">
                       <div class="list-row-buttons btn-group pull-right">
-                        <button class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown" type="button"><span class="caret"></span></button>
+                        <span class="caret dropdown-toggle" data-toggle="dropdown"></span>
                         <ul class="dropdown-menu pull-right">
                           <li>
                             <a class="action" onclick="edit_comment({{comment.id}})">Edit</a>
@@ -159,55 +157,7 @@
           <!-- Comments Section Ends-->
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="panel panel-default">
-          <div class="panel-heading view-pad">
-            <h5>Label</h5>
-          </div>
-          <div class="panel-content" id="datashow">
-            <div class="row marl">
-              <div class="filter_col col-md-12">
-                <div class="form-group">
-                  <label class="contact_field_label" for="id_assigned_user" data-name="name">Assigned User(s)</label>
-                  <div class="contact_field" id="contact_assigned_users" data-name="name">
-                    {%if not contact_record.assigned_to %}
-                      Not Assigned Yet
-                    {% else %}
-                      {% for user in contact_record.assigned_to.all %}
-                        <li>{{ user }}</li>
-                      {% endfor %}
-                    {% endif %}
-                  </div>
-                </div>
-              </div>
-              <div class="filter_col col-md-12">
-                <div class="form-group">
-                  <label class="contact_field_label" for="id_team" data-name="name">Assigned Team(s)</label>
-                  <div class="contact_field" id="contact_team" data-name="name">
-                    {%if not contact_record.teams %}
-                      Not Assigned Yet
-                    {% else %}
-                      {% for team in contact_record.teams.all %}
-                        <li>{{ team }}</li>
-                      {% endfor %}
-                    {% endif %}
-                  </div>
-                </div>
-              </div>
-              <div class="filter_col col-md-12">
-                <div class="form-group">
-                  <label class="contact_field_label" for="id_created_on" data-name="name">Created On</label>
-                  <div class="contact_field" id="contact_created_on" data-name="name">
-                    {{ contact_record.created_on }}
-                  </div>
-                </div>
-              </div>
-              <div class="filter_col col-md-12">
-                <div class="form-group">
-                  <label class="contact_field_label" for="id_created_by" data-name="name">Created by</label>
-                  <div class="contact_field" id="contact_created_by" data-name="name">
-                   {{ contact_record.created_by }}
-                  </div>
+
                 </div>
               </div>
             </div>

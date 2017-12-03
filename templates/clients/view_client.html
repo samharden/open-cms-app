@@ -9,258 +9,163 @@
 <!-- breadcrumb ends here -->
 {% endblock breadcrumb1 %}
 {% block content %}
-  <!-- clients VIEW STARTS -->
-  <div class="main_container" id="maincontainer">
-    <div class="overview_form_block row marl">
-      <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading view-pad">
-            <h5>
-              OVERVIEW
-              <span class="pull-right" style="margin-top: -10px">
-                <div class="dropdown">
-                  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Actions
-                  <span class="caret"></span></button>
-                  <ul class="dropdown-menu">
-                    <li><a href="{% url 'clients:edit_account' account_record.id %}" >Edit</a></li>
-                    <li class="delete_account" ><a href="{% url 'clients:remove_account' account_record.id %}" id="remove_account">REMOVE</a></li>
-                  </ul>
-                </div>
-              </span>
-            </h5>
-          </div>
-          <div class="panel-content" id="datashow">
-            <div class="row marl">
-              <div class="col-md-6">
-                {% if account_record.name %}
-                <div class="filter_col col-md-12" id="iname">
-                  <div class="form-group" >
-                    <label class="acc_field_label" for="id_name" data-name="name">Name</label>
-                    <div class="account_field" id="account_name" data-name="name">{{ account_record.name }}</div>
-                  </div>
-                </div>
-                {% endif %}
-                {% if account_record.phone %}
-                <div class="filter_col col-md-12">
-                  <div class="form-group">
-                    <label class="acc_field_label" for="id_phone" data-name="name">Phone</label>
-                    <div class="account_field" id="account_phone" data-name="name">{{ account_record.phone }}</div>
-                  </div>
-                </div>
-                {% endif %}
-                {% if account_record.email %}
-                <div class="filter_col col-md-12">
-                  <div class="form-group">
-                    <label class="acc_field_label" for="id_email" data-name="name">Email</label>
-                    <div class="account_field" id="account_email" data-name="name"><a href="mailto:{{ account_record.email }}">{{ account_record.email }}</a></div>
-                  </div>
-                </div>
-                {% endif %}
-                {% if account_record.website %}
-                <div class="filter_col col-md-12">
-                  <div class="form-group">
-                    <label class="acc_field_label" for="id_website" data-name="name">Website</label>
-                    <div class="account_field" id="account_website" data-name="name">{{ account_record.website }}</div>
-                  </div>
-                </div>
-                {% endif %}
-                {% if account_record.industry %}
-                <div class="filter_col col-md-12">
-                  <div class="form-group">
-                    <label class="acc_field_label" for="id_industry" data-name="name">Case Type</label>
-                    <div class="account_field" id ="account_industry" data-name="name">{{ account_record.industry }}</div>
-                  </div>
-                </div>
-                {% endif %}
-              </div>
-              <div class="col-md-4">
-                {% if account_record.billing_address.address_line or account_record.billing_address.street or  account_record.billing_address.city or   account_record.billing_address.state or account_record.billing_address.postcode or account_record.billing_address.country %}
-                <div class="filter_col col-md-12">
-                  <div class="form-group">
-                    <label class="acc_field_label" for="id_billing_address" data-name="name">Billing Address</label>
-                    <div class="account_field" id="account_billing_address" data-name="name">
-                      {% if account_record.billing_address.address_line %}
-                        {{account_record.billing_address.address_line}}</br>
-                      {% endif %}
-                      {% if account_record.billing_address.street %}
-                        {{ account_record.billing_address.street }}</br>
-                      {% endif %}
-                      {% if account_record.billing_address.city %}
-                        {{ account_record.billing_address.city }},
-                      {% endif %}
-                      {% if account_record.billing_address.state %}
-                        {{ account_record.billing_address.state }}
-                      {% endif %}
-                      {% if account_record.billing_address.postcode %}
-                        {{ account_record.billing_address.postcode }}</br>
-                      {% endif %}
-                      {% if account_record.billing_address.country %}
-                        {{ account_record.billing_address.get_country_display }}
-                      {% endif %}
-                    </div>
-                  </div>
-                </div>
-                {% endif %}
-                {% if  account_record.shipping_address.address_line or account_record.shipping_address.street or account_record.shipping_address.city or account_record.shipping_address.state or account_record.shipping_address.postcode or account_record.shipping_address.country %}
-                <div class="filter_col col-md-12">
-                  <div class="form-group">
-                    <label class="acc_field_label" for="id_shipping_address" data-name="name">Shipping Address</label>
-                    <div class="account_field" id="account_shipping_address" data-name="name">
-                      {% if account_record.shipping_address.address_line %}
-                        Address Line:{{account_record.shipping_address.address_line}}</br>
-                      {% endif %}
-                      {% if account_record.shipping_address.street %}
-                        Street:{{ account_record.shipping_address.street }}</br>
-                      {% endif %}
-                      {% if account_record.shipping_address.city %}
-                        City:{{ account_record.shipping_address.city }}</br>
-                      {% endif %}
-                      {% if account_record.shipping_address.state %}
-                        State:{{ account_record.shipping_address.state }}</br>
-                      {% endif %}
-                      {% if account_record.shipping_address.postcode %}
-                        Postcode:{{ account_record.shipping_address.postcode }}</br>
-                      {% endif %}
-                      {% if account_record.shipping_address.country %}
-                        Country:{{ account_record.shipping_address.get_country_display }}
-                      {% endif %}
-                    </div>
-                  </div>
-                </div>
-                {% endif %}
-                {% if account_record.description %}
-                <div class="filter_col col-md-12">
-                  <div class="form-group">
-                    <label class="acc_field_label" for="id_description" data-name="name">Description</label>
-                    <div class="account_field" id="account_description" data-name="name">{{account_record.description}}</div>
-                  </div>
-                </div>
-                {% endif %}
-              </div>
-            </div>
-          </div>
-          <!-- Comments Section starts-->
-          <div class="panel-heading view-pad">
-            <h5>COMMENTS</h5>
-          </div>
-          <div class="panel-content" id="datashow">
-            <div class="row marl">
-              <div class="col-md-12">
-                <form id="comment_form" method="POST" enctype="multipart/form-data">{% csrf_token %}
-                  <div class="form-group">
-                    <textarea class="form-control" textarea cols="40" rows="3" id="id_comments" name="comment" placeholder="Submit Your Comments Here"></textarea><span><i id="CommentError" style="display:none; color:red"></i></span>
-                    </br>
-                    <button class="btn btn-default save" style="text-align: center;" id="comment_submit" type="submit">Submit</button>
-                  </div>
-                  <input type="hidden" value="{{ account_record.id }}" name="accountid">
-                </form>
-                <ul class="list-group" id="comments_div">
-                  {% for comment in comments %}
-                  <li class="list-group-item list-row" id="comment{{comment.id}}">
-                    <div class="pull-right right-container">
-                      <div class="list-row-buttons btn-group pull-right">
-                        <button class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown" type="button"><span class="caret"></span></button>
-                        <ul class="dropdown-menu pull-right">
-                          <li>
-                            <a class="action" onclick="edit_comment({{comment.id}})">Edit</a>
-                          </li>
-                          <li>
-                            <a class="action" onclick="remove_comment({{comment.id}})">Remove</a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="stream-head-container">{{ comment.commented_by }} Commented</div>
-                    <div class="stream-post-container" id="comment_name{{comment.id}}"><pre>{{ comment.comment }}</pre></div>
-                    <div class="stream-date-container">{{ comment.commented_on }}</div>
-                  </li>
-                  {% endfor %}
-                </ul>
-              </div>
-            </div>
-            <div class="modal fade" id="Comments_clients_Modal" role="dialog" data-keyboard="false" data-backdrop="static">
-              <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Update Your Comment</h4>
-                  </div>
-                  <form id="comment_edit_form" method="POST" >{% csrf_token %}
-                    <div class="modal-body">
-                      <div class="form-group">
-                        <textarea class="form-control" textarea cols="40" rows="3" id="id_editcomment" name="comment" placeholder="Submit Your Comments"></textarea><span><i id="CommentEditError" style="display:none; color:red"></i></span>
-                        <input type="hidden" value="{{ account.id }}" name="accountid">
-                        <input type="hidden" value="" name="commentid" id="commentid">
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button class="btn btn-default save" id="comment_edit" type="submit">Update</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Comments Section Ends-->
-        </div>
-      </div>
 
-        </div>
-      </div>
+<div class="container">
+  <div class="col-md-8 col-sm-6 col-xs-12" style="width:95%">
+
+
+  <center>
+    <h3>{{ account_record.name }}</h3>
+  </center>
+  <div class="pull-right">
+  <div class="dropdown">
+
+      <p class="pull-right" style="margin-top: -10px" id="dropdownMenu1" data-toggle="dropdown">Options
+        <span class="caret"></span></p>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+
+        <li><a href="{% url 'clients:edit_account' each_account.id %}">EDIT</a></li>
+        <li><a href="{% url 'clients:remove_account' each_account.id %}">REMOVE</a></li>
+      </ul>
     </div>
-  </div>
-  <!-- clients VIEW ENDS -->
+    </div>
 
 
+      <!-- </div> -->
+      <div class="panel-content" id="datashow">
+        <!-- <div class="row marl"> -->
+          <!-- <div class="col-md-6">
+            <div class="filter_col col-md-12" id="iname">
+              {% if account_record.name %}
 
-  <!-- CASES LIST STARTS -->
-  <form method='GET' class="accountdetails_row">
-    <div class="table_container_row row marl">
-      <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading-list view-pad text-center">
-            CASES
-            <span class="pull-right glyphicon glyphicon-plus" data-toggle="modal" data-dismiss="modal_case" data-target="#myModal3"></span>
+                <div class="form-group" >
+                  <label class="acc_field_label" for="id_name" data-name="name">Name</label>
+                  <div class="account_field" id="account_name" data-name="name">{{ account_record.name }}</div>
+                </div> -->
+              </div>
+              <!-- {% endif %}
+              {% if account_record.email %} -->
+              <div class="filter_col col-md-4">
+                <div class="form-group">
+
+                  Email: <a href="mailto:{{ account_record.email }}">{{ account_record.email }}</a>
+                </div>
+              </div>
+              {% endif %}
+
+              {% if account_record.industry %}
+              <div class="filter_col col-md-4">
+                <div class="form-group">
+
+                  <div class="account_field" id ="account_industry" data-name="name">Case Type: {{ account_record.industry }}</div>
+                </div>
+              </div>
+              {% endif %}
+
+            {% if account_record.phone %}
+            <div class="filter_col col-md-2">
+              <div class="form-group">
+
+                <div class="account_field" id ="account_industry" data-name="name">Phone: {{ account_record.phone }}</div>
+              </div>
+            </div>
+            {% endif %}
           </div>
-          <div class="panel-content">
-            <table class="table table-bordered table-striped table-condensed">
-              <thead>
-                <tr>
+            <div class="col-md-4">
+              {% if account_record.billing_address.address_line or account_record.billing_address.street or  account_record.billing_address.city or   account_record.billing_address.state or account_record.billing_address.postcode or account_record.billing_address.country %}
+              <div class="filter_col col-md-8">
+                <div class="form-group">
 
-                  <th width="30%" style="text-align:center;">NAME</th>
-                  <th width="20%" style="text-align:center;">STATUS</th>
-                  <th width="20%" style="text-align:center;">CASE TYPE</th>
-                  <th width="25%" style="text-align:center;">ACTIONS</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for case in cases %}
-                <tr id="cases_details{{case.id}}" class="text-center">
-
-                  <td>{{ case.name }}</td>
-                  <td>{{ case.status }}</td>
-                  <td>
-                    {% if case.case_type %}
-                      {{ case.case_type }}
-                    {% else %}
-                      Not Set
+                  <div class="account_field" id="account_billing_address" data-name="name">
+                    {% if account_record.billing_address.address_line %}
+                      {{account_record.billing_address.address_line}}</br>
                     {% endif %}
-                  </td>
-                  <td>
-                    <button type="button" class="caseview btn-info" id="case_view" data-toggle="modal" data-dismiss="modal" data-target="#caseViewModal_{{case.id}}">VIEW</button>
-                    <button type="button" class="caseedit btn-success" id="case_edit" data-toggle="modal" data-dismiss="modal" data-target="#caseEditModal_{{case.id}}">EDIT</button>
+                    {% if account_record.billing_address.street %}
+                      {{ account_record.billing_address.street }}</br>
+                    {% endif %}
+                    {% if account_record.billing_address.city %}
+                      {{ account_record.billing_address.city }},
+                    {% endif %}
+                    {% if account_record.billing_address.state %}
+                      {{ account_record.billing_address.state }}
+                    {% endif %}
+                    {% if account_record.billing_address.postcode %}
+                      {{ account_record.billing_address.postcode }}</br>
+                    {% endif %}
+                    {% if account_record.billing_address.country %}
+                      {{ account_record.billing_address.get_country_display }}
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              {% endif %}
 
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
+
+
+
+            <!-- </div> -->
+
         </div>
-        <br clear="all">
       </div>
     </div>
-  </form>
+    <!-- </div> -->
+
+
+
+
+<div class="col-md-8 col-sm-6 col-xs-12" style="width:95%">
+<div class="panel">
+<!-- <div class="panel panel-default"> -->
+<form method='GET' class="accountdetails_row">
+  <div class="table_container_row row marl">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading-list view-pad text-center">
+          CASES
+          <span class="pull-right glyphicon glyphicon-plus" data-toggle="modal" data-dismiss="modal_case" data-target="#myModal3"></span>
+        </div>
+        <div class="panel-content">
+          <table class="table table-bordered table-striped table-condensed">
+            <thead>
+              <tr>
+
+                <th width="30%" style="text-align:center;">NAME</th>
+                <th width="20%" style="text-align:center;">STATUS</th>
+                <th width="20%" style="text-align:center;">CASE TYPE</th>
+                <th width="25%" style="text-align:center;">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for case in cases %}
+              <tr id="cases_details{{case.id}}" class="text-center">
+
+                <td>{{ case.name }}</td>
+                <td>{{ case.status }}</td>
+                <td>
+                  {% if case.case_type %}
+                    {{ case.case_type }}
+                  {% else %}
+                    Not Set
+                  {% endif %}
+                </td>
+                <td>
+                  <button type="button" class="caseview btn-info" id="case_view" data-toggle="modal" data-dismiss="modal" data-target="#caseViewModal_{{case.id}}">VIEW</button>
+                  <button type="button" class="caseedit btn-success" id="case_edit" data-toggle="modal" data-dismiss="modal" data-target="#caseEditModal_{{case.id}}">EDIT</button>
+
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+</div>
+</div>
+<!-- </div> -->
+
+
+
   <!-- CASES LISTS ENDS -->
   <!-- CASES MODAL STARTS -->
   <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">

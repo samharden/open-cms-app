@@ -19,7 +19,7 @@ from clients.models import Account
 # CRUD Operations Start
 
 
-@login_required
+# @login_required
 def leads_list(request):
     lead_obj = Lead.objects.all()
     page = request.POST.get('per_page')
@@ -319,7 +319,7 @@ def remove_comment(request):
 # Other Views
 
 
-@login_required
+# @login_required
 def get_leads(request):
     if request.method == 'GET':
         leads = Lead.objects.all()

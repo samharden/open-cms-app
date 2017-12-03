@@ -2,16 +2,16 @@
 {% load staticfiles %}
 {% block content %}
   <!-- CASE VIEW STARTS -->
-    <div class="main_container" id="maincontainer">
-      <div class="overview_form_block row marl">
-        <div class="col-md-12">
+
+      <div class="container">
+        <div class="col-md-8 col-sm-6 col-xs-12" style="width:95%">
           <div class="panel panel-default">
-            <div class="panel-heading view-pad">
+
               <h5>
-                OVERVIEW
+                CASE OVERVIEW
                 <span class="pull-right" style="margin-top: -10px">
                   <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Actions
+                    <button class="btn btn-round btn-dropdown-toggle" type="button" data-toggle="dropdown">Actions
                     <span class="caret"></span></button>
                     <ul class="dropdown-menu">
                       <li><a href="{% url 'cases:edit_case' case_record.id %}" id="edit_case">Edit</a></li>
@@ -20,22 +20,22 @@
                   </div>
                 </span>
               </h5>
-            </div>
+            <!-- </div> -->
             <div class="panel-content" id="datashow">
               <div class="row marl">
                 <div class="col-md-6">
                   <div class="filter_col col-md-12" id="iname">
-                    <div class="form-group" >
+                    <!-- <div class="form-group" > -->
                       <label class="case_field_label" for="id_name" data-name="name">Name</label>
                       <div class="case_field" id="case_name" data-name="name">{{ case_record.name }}</div>
-                    </div>
+                    <!-- </div> -->
                   </div>
                   <div class="filter_col col-md-12">
                     {% if case_record.account %}
-                    <div class="form-group">
+                    <!-- <div class="form-group"> -->
                       <label class="case_field_label" for="id_account" data-name="name">Client</label>
                       <div class="case_field" id ="case_account" data-name="name"><a href="{% url 'clients:view_account' case_record.account_id %}">{{ case_record.account }}</a></div>
-                    </div>
+                    <!-- </div> -->
                     {% endif %}
                   </div>
                   <div class="filter_col col-md-12">
@@ -50,124 +50,51 @@
                     </div>
                     {% endif %}
                   </div>
-                  <div class="filter_col col-md-12">
-                    {% if case_record.closed_on %}
-                    <div class="form-group">
-                      <label class="case_field_label" for="id_closedon" data-name="name">Close Date</label>
-                      <div class="case_field" id="case_closedon" data-name="name">{{ case_record.closed_on|date }}</div>
-                    </div>
-                    {% endif %}
-                  </div>
+
                 </div>
                 <div class="col-md-6">
                   <div class="filter_col col-md-12">
-                    <div class="form-group">
+                    <!-- <div class="form-group"> -->
                       <label class="case_field_label" for="id_status" data-name="name">Status</label>
                       <div class="case_field" id="case_status" data-name="name">{{ case_record.status }}</div>
                     </div>
-                  </div>
+                  <!-- </div> -->
                   <div class="filter_col col-md-12">
-                    <div class="form-group">
+                    <!-- <div class="form-group"> -->
                       <label class="case_field_label" for="id_priority" data-name="name">Priority</label>
                       <div class="case_field" id="case_priority" data-name="name">{{ case_record.priority }}</div>
                     </div>
-                  </div>
+                  <!-- </div> -->
                   <div class="filter_col col-md-12">
                     {% if case_record.case_type %}
-                    <div class="form-group">
+                    <!-- <div class="form-group"> -->
                       <label class="case_field_label" for="id_case_type" data-name="name">Type of Case</label>
                       <div class="case_field" id="case_case_type" data-name="name">{{ case_record.case_type }}</div>
                     </div>
                     {% endif %}
-                  </div>
+                  <!-- </div> -->
                 </div>
                 <div class="col-md-12">
                   <div class="filter_col col-md-12">
                     {% if case_record.description %}
-                    <div class="form-group">
+                    <!-- <div class="form-group"> -->
                       <label class="case_field_label" for="id_description" data-name="name" >Description</label>
                       <div class="case_field" id="case_description" data-name="name">{{ case_record.description }}</div>
-                    </div>
+                    <!-- </div> -->
                     {% endif %}
                   </div>
                 </div>
               </div>
             </div>
-
-
-
-            <!-- Comments Section starts-->
-            <div class="panel-heading view-pad">
-              <h5>COMMENTS</h5>
-            </div>
-            <div class="panel-content" id="datashow">
-              <div class="row marl">
-                <div class="col-md-12">
-                  <form id="comment_form" method="POST" enctype="multipart/form-data">{% csrf_token %}
-                    <div class="form-group">
-                      <textarea class="form-control" textarea cols="40" rows="3" id="id_comments" name="comment" placeholder="Submit Your Comments Here"></textarea><span><i id="CommentError" style="display:none; color:red"></i></span>
-                      </br>
-                      <button class="btn btn-default save" style="text-align: center;" id="comment_submit" type="submit">Submit</button>
-                    </div>
-                    <input type="hidden" value="{{case_record.id}}" name="caseid">
-                  </form>
-                  <ul class="list-group" id="comments_div">
-                    {% for comment in comments %}
-                    <li class="list-group-item list-row" id="comment{{comment.id}}">
-                      <div class="pull-right right-container">
-                        <div class="list-row-buttons btn-group pull-right">
-                          <button class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown" type="button"><span class="caret"></span></button>
-                          <ul class="dropdown-menu pull-right">
-                            <li>
-                              <a class="action" onclick="edit_comment({{comment.id}})">Edit</a>
-                            </li>
-                            <li>
-                              <a class="action" onclick="remove_comment({{comment.id}})">Remove</a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div class="stream-head-container">{{ comment.commented_by }} Commented</div>
-                      <div class="stream-post-container" id="comment_name{{comment.id}}"><pre>{{ comment.comment }}</pre></div>
-                      <div class="stream-date-container">{{ comment.commented_on }}</div>
-                    </li>
-                    {% endfor %}
-                  </ul>
-                </div>
-              </div>
-              <div class="modal fade" id="Comments_Cases_Modal" role="dialog" data-keyboard="false" data-backdrop="static">
-                <div class="modal-dialog modal-lg">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title">Update Your Comment</h4>
-                    </div>
-                    <form id="comment_edit_form" method="POST" >{% csrf_token %}
-                      <div class="modal-body">
-                        <div class="form-group">
-                          <textarea class="form-control" textarea cols="40" rows="3" id="id_editcomment" name="comment" placeholder="Submit Your Comments"></textarea>
-                          <input type="hidden" value="{{ case.id }}" name="caseid">
-                          <input type="hidden" value="" name="commentid" id="commentid">
-                        </div>
-                      </div>
-                      <div class="modal-footer">
-                        <button class="btn btn-default save" id="comment_edit" type="submit">Update</button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Comments Section Ends-->
           </div>
-        </div>
+          </div>
 
 
-  <!--END CREATE MEETING MODEL-->
 
-  <div class="table_container_row row marl">
-    <div class="col-md-12">
-      <div class="panel panel-default">
+
+  <div class="col-md-8 col-sm-6 col-xs-12" style="width:95%">
+    <div class="panel">
+      <!-- <div class="panel panel-default"> -->
         <div class="panel-heading-list text-center">
           CASE DOCUMENTS
 
@@ -178,7 +105,7 @@
               <tr>
 
                 <th width="20%" style="text-align:center;">File Name</th>
-
+                <th width="20%" style="text-align:center;">Date Added</th>
               </tr>
             </thead>
             <tbody>
@@ -188,6 +115,7 @@
               <tr class="case_row{{case.id}}" style="text-align:center;">
 
                 <td><a href="/media/{{obj.document}}">{{ obj.description }}</a></td>
+                <td>{{ obj.uploaded_at }}</td>
 
               </tr>
               {% endif %}
@@ -201,7 +129,79 @@
         </div>
       </div>
     </div>
-  </div>
+  <!-- </div> -->
+
+
+              <!-- Comments Section starts-->
+              <!-- <div class="container"> -->
+                <div class="col-md-8 col-sm-6 col-xs-12" style="width:95%">
+                  <div class="panel"><center>
+                <h4>CASE NOTES</h4><br>
+
+                <div class="panel-content" id="datashow">
+                <!-- <div class="row marl"> -->
+                  <!-- <div class="col-md-12"> -->
+                    <form id="comment_form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                      <div class="form-group">
+                        <textarea class="form-control" textarea cols="40" rows="3" id="id_comments" name="comment" placeholder="Submit Your Comments Here"></textarea><span><i id="CommentError" style="display:none; color:red"></i></span>
+
+                        <button class="btn btn-round btn-dropdown-toggle" style="text-align: center;" id="comment_submit" type="submit">Submit</button>
+                      </div>
+                      <input type="hidden" value="{{case_record.id}}" name="caseid">
+                    </form>
+                    <ul class="list-group" id="comments_div">
+                      {% for comment in comments %}
+                      <!-- <li class="list-group-item list-row" id="comment{{comment.id}}"> -->
+                        <div class="pull-right right-container">
+                          <div class="list-row-buttons btn-group pull-right">
+                            <span class="caret" data-toggle="dropdown"></span>
+                            <ul class="dropdown-menu pull-right">
+                              <li>
+                                <a class="action" onclick="edit_comment({{comment.id}})">Edit</a>
+                              </li>
+                              <li>
+                                <a class="action" onclick="remove_comment({{comment.id}})">Remove</a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div></center>
+                        <div class="stream-head-container">{{ comment.commented_by }} Commented</div>
+                        <div class="stream-post-container" id="comment_name{{comment.id}}"><pre>{{ comment.comment }}</pre></div>
+                        <div class="stream-date-container">{{ comment.commented_on }}</div>
+                      </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+                <div class="modal fade" id="Comments_Cases_Modal" role="dialog" data-keyboard="false" data-backdrop="static">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Update Your Comment</h4>
+                      </div>
+                      <form id="comment_edit_form" method="POST" >{% csrf_token %}
+                        <div class="modal-body">
+                          <div class="form-group">
+                            <textarea class="form-control" textarea cols="40" rows="3" id="id_editcomment" name="comment" placeholder="Submit Your Comments"></textarea>
+                            <input type="hidden" value="{{ case.id }}" name="caseid">
+                            <input type="hidden" value="" name="commentid" id="commentid">
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-default save" id="comment_edit" type="submit">Update</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Comments Section Ends-->
+            </div>
+          </div>
+
+
+
 {% endblock %}
 {% block js_block %}
   <script src="{% static 'js/cases/view_case.js' %}"></script>

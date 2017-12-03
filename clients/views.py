@@ -14,7 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 # CRUD Operations Start
 
 
-@login_required
+# @login_required
 @csrf_exempt
 def clients_list(request):
     clients_list = Account.objects.all()
@@ -93,7 +93,7 @@ def add_account(request):
         })
 
 
-@login_required
+# @login_required
 @csrf_exempt
 def view_account(request, account_id):
     account_record = get_object_or_404(Account, id=account_id)
@@ -252,7 +252,7 @@ def remove_comment(request):
 # Comments Section Ends
 
 
-@login_required
+# @login_required
 def get_clients(request):
     if request.method == 'GET':
         if request.user.is_authenticated():

@@ -7,14 +7,18 @@
   </ol>
 {% endblock %}
 {% block content %}
+
+<div class="container">
+
+  <center>
+    <h3>Create Case</h3>
+  </center>
   <form id="submitForm" method="POST" action="" novalidate>{% csrf_token %}
 
     <div class="overview_form_block row marl">
       <div class="col-md-12">
         <div class="panel panel-default">
-          <div class="panel-heading">
-            Overview
-          </div>
+
           <div class="panel-content">
             <div class="row marl">
               <div class="col-md-6">
@@ -47,7 +51,7 @@
                   </div>
                 </div>
 
-                
+
               </div>
               <div class="col-md-6">
                 <div class="filter_col col-md-12">
@@ -80,13 +84,14 @@
       <input type="hidden" id="save_new_form" name="savenewform">
     </div>
     <div class="row marl buttons_row text-center">
-      <button class="btn btn-default save" type="submit">Save</button>
+      <button class="btn btn-round btn-dropdown-toggle save" type="submit">Save</button>
       {% if not case_obj %}
-        <button class="btn btn-success save savenew" type="submit">Save & New</button>
+        <button class="btn btn-round btn-dropdown-toggle save savenew" type="submit">Save & New</button>
       {% endif %}
-      <a href="{% url 'cases:list' %}" class="btn btn-default">Cancel</a>
+      <a href="{% url 'cases:list' %}" class="btn btn-round btn-dropdown-toggle">Cancel</a>
     </div>
   </form>
+  <br><br><br>
 {% endblock %}
 {% block js_block %}
   <script src="{% static 'js/cases/create_case.js' %}"></script>

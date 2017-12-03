@@ -2,164 +2,21 @@
 {% load staticfiles %}
 {% block content %}
 
-  <br>
-
-        <div class="main_container" id="maincontainer">
-          <div class="overview_form_block row marl">
+<div class="container">
+  <div class="col-md-8 col-sm-6 col-xs-12" style="width:95%">
 
 
-            <div class="col-md-4">
-              <div class="panel panel-default" >
-                <div class="panel-heading view-pad" style = "background-color:#39464D">
-                  <h5 style="color:white"><center>
-                    CLIENTS
-                  </center>
+              <!-- <div class="panel panel-default" > -->
 
-              </div>
+              <div class="filter_row row marl">
+                <div class="col-md-12">
+                  <a href="clients/list">CLIENTS</a><br>
 
-                    <div class="panel-content" id="datashow">
-                      <div class="row marl">
-                            <center>
-                              <div class="dropdown">
-                                  <button class="btn btn-default dropdown-toggle"  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Options
-                                    <span class="caret"></span>
-                                  </button>
-                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li><a href="clients/create">Create</a></li>
-                                    <li><a href="clients/list">View All</a></li>
-
-                                  </ul>
-                                </div>
-                          </center>
-
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-
-                <div class="col-md-4">
-                  <div class="panel panel-default" >
-                    <div class="panel-heading view-pad" style="background-color:#39464D">
-                      <h5 style="color:white"><center>
-                        CONTACTS
+                        <a href="contacts/list">CONTACTS</a><br>
+                        <a href="cases/list">CASES</a>
                       </center>
-                    </div>
-                        <div class="panel-content" id="datashow">
-
-                                <center>
-                                  <div class="dropdown">
-                                      <button class="btn btn-default dropdown-toggle"  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        Options
-                                        <span class="caret"></span>
-                                      </button>
-                                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                        <li><a href="contacts/create">Create</a></li>
-                                        <li><a href="contacts/list">View All</a></li>
-
-                                      </ul>
-                                    </div>
-                              </center>
-
-                            </div>
-                          </div>
-                        </div>
-                      <!-- </div> -->
 
 
-                      <div class="col-md-4">
-                        <div class="panel panel-default" >
-                          <div class="panel-heading view-pad" style="background-color:#39464D">
-                            <h5 style="color:white"><center>
-                              LEADS
-                            </center>
-
-                        </div>
-
-                              <div class="panel-content" id="datashow">
-                                <div class="row marl">
-                                      <center>
-                                        <div class="dropdown">
-                                            <button class="btn btn-default dropdown-toggle"  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                              Options
-                                              <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                              <li><a href="clients/create">Create</a></li>
-                                              <li><a href="clients/list">View All</a></li>
-
-                                            </ul>
-                                          </div>
-                                    </center>
-
-
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div class="col-md-4">
-                              <div class="panel panel-default" >
-                                <div class="panel-heading view-pad" style="background-color:#39464D">
-                                  <h5 style="color:white"><center>
-                                    CASES
-                                  </center>
-
-                              </div>
-
-                                    <div class="panel-content" id="datashow">
-                                      <div class="row marl">
-                                            <center>
-                                              <div class="dropdown">
-                                                  <button class="btn btn-default dropdown-toggle"  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                    Options
-                                                    <span class="caret"></span>
-                                                  </button>
-                                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                    <li><a href="cases/create">Create</a></li>
-                                                    <li><a href="cases/list">View All</a></li>
-
-                                                  </ul>
-                                                </div>
-                                          </center>
-
-
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div class="col-md-4">
-                                    <div class="panel panel-default" >
-                                      <div class="panel-heading view-pad" style="background-color:#39464D">
-                                        <h5 style="color:white"><center>
-                                          UPLOAD
-                                        </center>
-
-                                    </div>
-
-                                          <div class="panel-content" id="datashow">
-                                            <div class="row marl">
-                                                  <center>
-
-                                                        <a href="cases/upload_file/"><button class="btn btn-default">
-                                                          Upload File
-
-                                                        </button></a>
-
-                                                </center>
-
-
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-
-
-              </div>
-            </div>
 
             {% endblock %}
             {% block js_block %}

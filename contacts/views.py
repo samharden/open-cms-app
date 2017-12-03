@@ -14,7 +14,7 @@ from contacts.forms import ContactForm, ContactCommentForm
 # CRUD Operations Start
 
 
-@login_required
+# @login_required
 def contacts_list(request):
     contact_obj_list = Contact.objects.all()
     clients = Account.objects.all()
@@ -235,7 +235,7 @@ def remove_comment(request):
 # Other Views
 
 
-@login_required
+# @login_required
 def get_contacts(request):
     if request.method == 'GET':
         contacts = Contact.objects.filter()

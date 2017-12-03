@@ -7,42 +7,17 @@
   </ol>
 {% endblock %}
 {% block content %}
+<div class="container">
+
+  <center>
+    <h3>Create Client</h3>
+  </center>
   <form id="formid" action='' method="POST" novalidate>{% csrf_token %}
-    <div class="assigned_teams ro marl">
-      <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            Assigned Users & Teams
-          </div>
-          <div class="panel-content">
-            <div class="filter_col col-md-6">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Assigned Users</label>
-                {{ account_form.assigned_to }}
-                {{ account_form.assigned_to.errors }}
-              </div>
-            </div>
-            <div class="filter_col col-md-6">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Teams</label>
-                {{ account_form.teams }}
-                {{ account_form.teams.errors }}
-              </div>
-            </div>
-            <br clear="all">
-          </div>
-        </div>
-      </div>
-      <br clear="all">
-    </div>
-    <!-- assigned users & teams ends here -->
-    <!-- overview starts here -->
+
     <div class="overview_form_block row marl">
       <div class="col-md-12">
         <div class="panel panel-default">
-          <div class="panel-heading">
-            Overview
-          </div>
+
           <div class="panel-content">
             <div class="row marl">
               <div class="col-md-6">
@@ -86,7 +61,7 @@
               <div class="col-md-6">
                 <div class="filter_col billing_block col-md-12">
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Billing Address</label>
+                    <label for="exampleInputEmail1">Address</label>
                     {{ billing_form.address_line }}
                     {{ billing_form.address_line.errors }}
                   </div>
@@ -108,7 +83,7 @@
 
                   </div>
                 </div>
-                
+
 
               </div>
             </div>
@@ -121,13 +96,14 @@
     </div>
     <!-- overview ends here -->
     <div class="row marl buttons_row text-center">
-      <button class="btn btn-default save" type="submit">Save</button>
+      <button class="btn btn-round save" type="submit">Save</button>
       {% if not account_obj %}
-        <button class="btn btn-success save savenew" type="submit">Save & New</button>
+        <button class="btn btn-round save savenew" type="submit">Save & New</button>
       {% endif %}
-      <a href="{% url 'clients:list' %}" class="btn btn-default">CANCEL</a>
+      <a href="{% url 'clients:list' %}" class="btn btn-round">CANCEL</a>
     </div>
   </form>
+  <br><br><br>
 {% endblock %}
 {% block js_block %}
   <script type="text/javascript">
