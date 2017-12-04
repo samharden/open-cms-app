@@ -2,20 +2,34 @@
 {% load staticfiles %}
 {% block content %}
 
-<div class="container">
-  <div class="col-md-8 col-sm-6 col-xs-12" style="width:95%">
+    <!-- Container Starts -->
+    <div class="container">
+        <div class="col-md-8 col-sm-6 col-xs-12" style="width:95%">
+          <!-- <div class="content-inner"> -->
+            <h1 ><img src="{% static 'images/finch.png'  %}" style="width:79px"><br>Finch</h1>
+            <p class="lead">An open source legal case management software project.</p>
+            <div class="details-list">
+              <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                  <h3>Deploy your own Case Management Software.</h3>
+                  <p>Finch is free to use and completely open source. It's offered
+                  under the MIT License, which means you can clone it, deploy it,
+                  copy it, remix it, and customize it.</p>
+                </div>
 
-
-              <!-- <div class="panel panel-default" > -->
-
-              <div class="filter_row row marl">
-                <div class="col-md-12">
-                  <a href="clients/list">CLIENTS</a><br>
-
-                        <a href="contacts/list">CONTACTS</a><br>
-                        <a href="cases/list">CASES</a>
-                      </center>
-
+                <div class="col-sm-6 col-xs-12">
+                  <h3>Contribute</h3>
+                  <p>Want to contribute to the development of Finch? Is there
+                    a useful feature you want? Head over to
+                  the <a href="https://github.com/samharden/open-cms-app">Github Repo.</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Container Ends -->
 
 
             {% endblock %}
